@@ -5,7 +5,7 @@
 // @license      MIT © Aster Hours
 // @version      1.62
 // @author       Aster
-// @match        https://www.youtube.com/*
+// @match        https://www.youtube.com/w*
 // @grant        none
 // @updateURL    https://raw.githubusercontent.com/AsterHours/youtube-immersive-player/main/youtube-immersive-player.user.js
 // @downloadURL  https://raw.githubusercontent.com/AsterHours/youtube-immersive-player/main/youtube-immersive-player.user.js
