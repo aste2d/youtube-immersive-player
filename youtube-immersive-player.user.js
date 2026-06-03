@@ -3,10 +3,10 @@
 // @namespace    https://github.com/AsterHours/youtube-immersive-player
 // @description  Please check the GitHub link above. 请访问上方的GitHub链接查看说明。
 // @license      MIT © Aster Hours
-// @version      1.63
+// @version      1.64
 // @author       Aster
 // @match        https://www.youtube.com/*
-// @exclude      https://www.youtube.com/feed/*
+// @exclude      https://www.youtube.com/feed/history
 // @grant        none
 // @updateURL    https://raw.githubusercontent.com/AsterHours/youtube-immersive-player/main/youtube-immersive-player.user.js
 // @downloadURL  https://raw.githubusercontent.com/AsterHours/youtube-immersive-player/main/youtube-immersive-player.user.js
