@@ -37,7 +37,7 @@ The script runs locally in your browser with no network requests, tracking, or d
 
 # Install
 
-If you **already use** userscripts, **[open this link to install the userscript](https://raw.githubusercontent.com/AsterHours/youtube-immersive-player/main/youtube-immersive-player.user.js)**.
+If you **already use** userscripts, **[open this link to install the userscript](https://raw.githubusercontent.com/aste2d/youtube-immersive-player/main/youtube-immersive-player.user.js)**.
 
 > After installation, **[go to a YouTube video](https://www.youtube.com/watch?v=az0J8O8wRU8)** and press **V**.  
 > On the default watch page, you can also **middle-click** the video to toggle the drawer.  
@@ -66,7 +66,7 @@ Otherwise, follow the steps below, **depending on your browser**:
    - **Site access** → **On all sites**  
    - *(Optional)* **Allow in Incognito** if you want it in private windows
 
-5. **[Open this link to install the userscript](https://raw.githubusercontent.com/AsterHours/youtube-immersive-player/main/youtube-immersive-player.user.js)** and confirm in Tampermonkey.
+5. **[Open this link to install the userscript](https://raw.githubusercontent.com/aste2d/youtube-immersive-player/main/youtube-immersive-player.user.js)** and confirm in Tampermonkey.
 
 <br><br>
 
@@ -79,7 +79,7 @@ Otherwise, follow the steps below, **depending on your browser**:
    - Ensure it can **access data for all websites** (default)  
    - *(Optional)* **Run in Private Windows** if desired
 
-2. **[Open this link to install the userscript](https://raw.githubusercontent.com/AsterHours/youtube-immersive-player/main/youtube-immersive-player.user.js)** and confirm in Tampermonkey.
+2. **[Open this link to install the userscript](https://raw.githubusercontent.com/aste2d/youtube-immersive-player/main/youtube-immersive-player.user.js)** and confirm in Tampermonkey.
 
 <br><br>
 
@@ -92,7 +92,7 @@ Otherwise, follow the steps below, **depending on your browser**:
    - Click Tampermonkey → **Edit Websites** → Allow on **All Websites** (or add **[YouTube](https://www.youtube.com/)**)  
    - *(Optional)* Allow in Private Browsing if you need it  
 2. **iOS/iPadOS Safari:** Settings app → **Safari** → **Extensions** → Enable **Tampermonkey** and allow Website Access  
-3. **[Open this link to install the userscript](https://raw.githubusercontent.com/AsterHours/youtube-immersive-player/main/youtube-immersive-player.user.js)** and confirm in Tampermonkey.
+3. **[Open this link to install the userscript](https://raw.githubusercontent.com/aste2d/youtube-immersive-player/main/youtube-immersive-player.user.js)** and confirm in Tampermonkey.
 
 <br><br><br>
 
@@ -101,7 +101,7 @@ Otherwise, follow the steps below, **depending on your browser**:
 <br>
 
 ### Configuration
-- See [Releases](https://github.com/AsterHours/youtube-immersive-player/releases)
+- See [Releases](https://github.com/aste2d/youtube-immersive-player/releases)
 
 ### Compatibility
 
@@ -113,8 +113,8 @@ Otherwise, follow the steps below, **depending on your browser**:
 
 ### Links
 
-- Project home: **[GitHub Repository](https://github.com/AsterHours/youtube-immersive-player)**  
-- Author: **[aste](https://github.com/AsterHours)**  
+- Project home: **[GitHub Repository](https://github.com/aste2d/youtube-immersive-player)**  
+- Author: **[aste](https://github.com/aste2d)**  
 - **[YouTube](https://www.youtube.com/)**  
 - **[Tampermonkey](https://www.tampermonkey.net/)**
 
@@ -124,7 +124,7 @@ Otherwise, follow the steps below, **depending on your browser**:
 
 YouTube Immersive Player
 
-Copyright © 2025 AsterHours
+Copyright © 2025 aste2d
 
 This project is licensed under the Apache License, Version 2.0.
 
