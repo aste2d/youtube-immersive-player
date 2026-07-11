@@ -36,7 +36,7 @@
 # 安装
 
 如果你**已经在用**用户脚本，  
-**[点此直接安装该用户脚本](https://raw.githubusercontent.com/AsterHours/youtube-immersive-player/main/youtube-immersive-player.user.js)**。
+**[点此直接安装该用户脚本](https://raw.githubusercontent.com/aste2d/youtube-immersive-player/main/youtube-immersive-player.user.js)**。
 
 > 安装后，**[打开任意 YouTube 视频](https://www.youtube.com/watch?v=az0J8O8wRU8)** 并按 **V**。  
 > 在默认观看页面，你也可以**鼠标中键点击视频**来切换抽屉。  
@@ -61,7 +61,7 @@
 4. **允许在所有站点运行用户脚本**（Tampermonkey 的详情页）：  
    - **Site access** → **On all sites**  
    - *(可选)* 如需在隐身窗口使用，请开启 **Allow in Incognito**
-5. **[打开此链接安装脚本](https://raw.githubusercontent.com/AsterHours/youtube-immersive-player/main/youtube-immersive-player.user.js)** 并在 Tampermonkey 中确认。
+5. **[打开此链接安装脚本](https://raw.githubusercontent.com/aste2d/youtube-immersive-player/main/youtube-immersive-player.user.js)** 并在 Tampermonkey 中确认。
 
 <br><br>
 
@@ -73,7 +73,7 @@
 1. 打开 **附加组件管理器** → **扩展**：**[about:addons](about:addons)** → **Tampermonkey** → **权限（Permissions）**  
    - 确保其可**访问所有网站的数据**（默认）  
    - *(可选)* 如需在隐私窗口使用，开启 **Run in Private Windows**
-2. **[打开此链接安装脚本](https://raw.githubusercontent.com/AsterHours/youtube-immersive-player/main/youtube-immersive-player.user.js)** 并在 Tampermonkey 中确认。
+2. **[打开此链接安装脚本](https://raw.githubusercontent.com/aste2d/youtube-immersive-player/main/youtube-immersive-player.user.js)** 并在 Tampermonkey 中确认。
 
 <br><br>
 
@@ -86,7 +86,7 @@
    - 点击 Tampermonkey → **编辑网站** → 允许 **所有网站**（或添加 **[YouTube](https://www.youtube.com/)**）  
    - *(可选)* 如需在私密浏览中使用，请开启相应权限  
 2. **iOS/iPadOS Safari：** 系统 **设置** → **Safari** → **扩展** → 启用 **Tampermonkey** 并允许网站访问  
-3. **[打开此链接安装脚本](https://raw.githubusercontent.com/AsterHours/youtube-immersive-player/main/youtube-immersive-player.user.js)** 并在 Tampermonkey 中确认。
+3. **[打开此链接安装脚本](https://raw.githubusercontent.com/aste2d/youtube-immersive-player/main/youtube-immersive-player.user.js)** 并在 Tampermonkey 中确认。
 
 <br><br><br>
 
@@ -95,7 +95,7 @@
 <br>
 
 ### 设置
-- 参见 [Releases](https://github.com/AsterHours/youtube-immersive-player/releases)
+- 参见 [Releases](https://github.com/aste2d/youtube-immersive-player/releases)
 
 ### 兼容性
 
@@ -107,8 +107,8 @@
 
 ### 链接
 
-- 项目主页：**[GitHub 仓库](https://github.com/AsterHours/youtube-immersive-player)**  
-- 作者：**[aste](https://github.com/AsterHours)**  
+- 项目主页：**[GitHub 仓库](https://github.com/aste2d/youtube-immersive-player)**  
+- 作者：**[aste](https://github.com/aste2d)**  
 - **[YouTube](https://www.youtube.com/)**  
 - **[Tampermonkey](https://www.tampermonkey.net/)**
 
@@ -118,7 +118,7 @@
 
 YouTube Immersive Player
 
-Copyright © 2025 AsterHours
+Copyright © 2025 aste2d
 
 This project is licensed under the Apache License, Version 2.0.
 
