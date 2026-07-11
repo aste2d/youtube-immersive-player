@@ -36,7 +36,7 @@
 # インストール
 
 すでにユーザースクリプトを**利用している**場合は、  
-**[こちらのリンクからスクリプトをインストール](https://raw.githubusercontent.com/AsterHours/youtube-immersive-player/main/youtube-immersive-player.user.js)** してください。
+**[こちらのリンクからスクリプトをインストール](https://raw.githubusercontent.com/aste2d/youtube-immersive-player/main/youtube-immersive-player.user.js)** してください。
 
 > インストール後、**[任意の YouTube 動画ページ](https://www.youtube.com/watch?v=az0J8O8wRU8)** を開き、**V** を押してください。  
 > 既定の視聴ページでは、動画を**中クリック**してドロワーを切り替えることもできます。  
@@ -61,7 +61,7 @@
 4. **すべてのサイトでユーザースクリプトを許可**（Tampermonkey の詳細ページ）：  
    - **Site access** → **On all sites**  
    - *(任意)* **Allow in Incognito** を有効化するとシークレットウィンドウでも動作
-5. **[このリンクからスクリプトをインストール](https://raw.githubusercontent.com/AsterHours/youtube-immersive-player/main/youtube-immersive-player.user.js)** し、Tampermonkey で確認します。
+5. **[このリンクからスクリプトをインストール](https://raw.githubusercontent.com/aste2d/youtube-immersive-player/main/youtube-immersive-player.user.js)** し、Tampermonkey で確認します。
 
 <br><br>
 
@@ -73,7 +73,7 @@
 1. **アドオンマネージャー** → **拡張機能**：**[about:addons](about:addons)** → **Tampermonkey** → **Permissions**  
    - **すべての Web サイトのデータにアクセス**できることを確認（既定）  
    - *(任意)* **Run in Private Windows** を有効化するとプライベートウィンドウでも動作
-2. **[このリンクからスクリプトをインストール](https://raw.githubusercontent.com/AsterHours/youtube-immersive-player/main/youtube-immersive-player.user.js)** し、Tampermonkey で確認します。
+2. **[このリンクからスクリプトをインストール](https://raw.githubusercontent.com/aste2d/youtube-immersive-player/main/youtube-immersive-player.user.js)** し、Tampermonkey で確認します。
 
 <br><br>
 
@@ -86,7 +86,7 @@
    - Tampermonkey → **Web サイトを編集（Edit Websites）** → **すべての Web サイト**を許可（あるいは **[YouTube](https://www.youtube.com/)** を追加）  
    - *(任意)* **プライベートブラウズ**での許可を有効化  
 2. **iOS/iPadOS Safari：** 設定アプリ → **Safari** → **機能拡張** → **Tampermonkey** を有効化し、Web サイトアクセスを許可  
-3. **[このリンクからスクリプトをインストール](https://raw.githubusercontent.com/AsterHours/youtube-immersive-player/main/youtube-immersive-player.user.js)** し、Tampermonkey で確認します。
+3. **[このリンクからスクリプトをインストール](https://raw.githubusercontent.com/aste2d/youtube-immersive-player/main/youtube-immersive-player.user.js)** し、Tampermonkey で確認します。
 
 <br><br><br>
 
@@ -95,7 +95,7 @@
 <br>
 
 ### 設定
-- [Releases](https://github.com/AsterHours/youtube-immersive-player/releases) を参照
+- [Releases](https://github.com/aste2d/youtube-immersive-player/releases) を参照
 
 ### 互換性
 
@@ -107,8 +107,8 @@
 
 ### リンク
 
-- プロジェクト：**[GitHub Repository](https://github.com/AsterHours/youtube-immersive-player)**  
-- 作者：**[aste](https://github.com/AsterHours)**  
+- プロジェクト：**[GitHub Repository](https://github.com/aste2d/youtube-immersive-player)**  
+- 作者：**[aste](https://github.com/aste2d)**  
 - **[YouTube](https://www.youtube.com/)**  
 - **[Tampermonkey](https://www.tampermonkey.net/)**
 
@@ -118,7 +118,7 @@
 
 YouTube Immersive Player 
 
-Copyright © 2025 AsterHours
+Copyright © 2025 aste2d
 
 This project is licensed under the Apache License, Version 2.0. 
 
