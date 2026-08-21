@@ -1,12 +1,11 @@
 // ==UserScript==
-// @name         YouTube Immersive Player | YouTube沉浸式播放器
+// @name         YouTube Immersive
 // @namespace    https://github.com/aste2d/youtube-immersive-player
 // @description  Please check the GitHub link above. 请访问上方的GitHub链接查看说明。
 // @license      MIT © aste2d
-// @version      1.66
+// @version      1.69
 // @author       aste
 // @match        https://www.youtube.com/*
-// @exclude      https://www.youtube.com/feed/history*
 // @grant        none
 // @updateURL    https://raw.githubusercontent.com/aste2d/youtube-immersive-player/main/youtube-immersive-player.user.js
 // @downloadURL  https://raw.githubusercontent.com/aste2d/youtube-immersive-player/main/youtube-immersive-player.user.js
@@ -22,6 +21,7 @@
     // ================= [ 快捷键 Shortcuts ] ==================
     HOTKEY_RESIZE_PLAYER: 'r',            // 切换主播放器宽度/跳转Shorts的快捷键 (默认 'r')
     HOTKEY_TOGGLE_SECONDARY: 'v',         // 显示/隐藏右侧推荐栏的快捷键 (默认 'v')
+    HOTKEY_PIP: 'p',                      // 触发画中画(Picture-in-Picture)的快捷键 (默认 'p')
     // ========================================================
 
     RESIZE_WITH_R_KEY: true,              // 允许按快捷键(默认 'r')切换主播放器宽度比例
@@ -44,6 +44,8 @@
   };
 
   const STYLE_ID = 'tm-youtube-inline-recommend-style-v1-55';
+  let globalEventsBound = false;
+  let lastActiveVideo = null; // 记录最后一次交互的焦点视频
 
   // 从 localStorage 读取状态，如果有记录且为 'true'，则默认开启，否则为 false
   let isPrimaryResized = localStorage.getItem('yt_immersive_primary_resized') === 'true';
@@ -168,7 +170,6 @@
     `;
   }
 
-
   if (CONFIG.HIDE_ALL_BEZELS) {
     css += `#movie_player .ytp-bezel { display: none !important; }`;
   } else if (CONFIG.HIDE_PLAY_PAUSE_BEZEL) {
@@ -197,12 +198,16 @@
 
 
   function injectStyle() {
-    if (!document.getElementById(STYLE_ID)) {
-      const el = document.createElement('style');
+    let el = document.getElementById(STYLE_ID);
+    if (!el) {
+      el = document.createElement('style');
       el.id = STYLE_ID;
       el.textContent = css;
       document.head.appendChild(el);
     }
+    // 动态判断：仅在播放页和 Shorts 页面启用样式，防止污染其它页面
+    const isPlayerPage = window.location.pathname.startsWith('/watch') || window.location.pathname.startsWith('/shorts/');
+    el.disabled = !isPlayerPage;
   }
 
   function setTopVar() {
@@ -269,29 +274,122 @@
   }
 
   function performVToggle(secondary) {
-    if (!CONFIG.TOGGLE_WITH_V_KEY) return;
+    if (!CONFIG.TOGGLE_WITH_V_KEY || !secondary) return;
     const flexy = document.querySelector('ytd-watch-flexy');
     if (!canShowRightOnCurrentMode(flexy)) return;
     secondary.classList.toggle('show');
   }
 
-  function initToggle(secondary) {
-    if (!secondary || secondary.dataset.tmBound) return;
-    secondary.dataset.tmBound = '1';
+  function bindGlobalEvents() {
+    if (globalEventsBound) return;
+    globalEventsBound = true;
 
+    // ==============================================================
+    // 焦点视频捕捉：在捕获阶段监听视频的 play 和 pause 事件
+    // ==============================================================
+    document.addEventListener('play', (e) => {
+      if (e.target && e.target.tagName === 'VIDEO') lastActiveVideo = e.target;
+    }, true);
+    document.addEventListener('pause', (e) => {
+      if (e.target && e.target.tagName === 'VIDEO') lastActiveVideo = e.target;
+    }, true);
+
+    // 键盘快捷键监听
+    document.addEventListener('keydown', (e) => {
+      const t = e.target;
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+      if (e.ctrlKey || e.altKey || e.metaKey) return;
+      if (!e.key) return;
+
+      const key = e.key.toLowerCase();
+      const toggleKey = (CONFIG.HOTKEY_TOGGLE_SECONDARY || 'v').toLowerCase();
+      const resizeKey = (CONFIG.HOTKEY_RESIZE_PLAYER || 'r').toLowerCase();
+      const pipKey = (CONFIG.HOTKEY_PIP || 'p').toLowerCase();
+
+      // 触发画中画逻辑 (智能寻找焦点)
+      if (key === pipKey) {
+        // 1. 如果当前已经有正在展示的画中画，直接退出并终止
+        if (document.pictureInPictureElement) {
+          document.exitPictureInPicture().catch(() => {});
+          return;
+        }
+
+        const allVideos = Array.from(document.querySelectorAll('video'));
+        let targetVideo = null;
+
+        // 2. 优先级最高：寻找当前真正正在播放且非隐藏的视频
+        targetVideo = allVideos.find(v => !v.paused && v.readyState > 0 && v.offsetWidth > 0);
+
+        // 3. 如果所有视频都暂停了，调用刚才记录的最后一次交互的焦点视频
+        if (!targetVideo && lastActiveVideo && document.body.contains(lastActiveVideo)) {
+          targetVideo = lastActiveVideo;
+        }
+
+        // 4. 如果连交互记录都没有，进入 URL 匹配兜底
+        if (!targetVideo) {
+          if (window.location.pathname.startsWith('/shorts/')) {
+            targetVideo = document.querySelector('ytd-reel-video-renderer[is-active] video') || document.querySelector('video');
+          } else {
+            targetVideo = document.querySelector('video.video-stream') || allVideos[0];
+          }
+        }
+
+        // 5. 最终执行画中画
+        if (targetVideo) {
+          targetVideo.requestPictureInPicture().catch(() => {});
+        }
+        return;
+      }
+
+      // 切换侧边栏逻辑 (原V键)
+      if (key === toggleKey && CONFIG.TOGGLE_WITH_V_KEY) {
+        if (!window.location.pathname.startsWith('/watch')) return;
+        const flexy = document.querySelector('ytd-watch-flexy');
+        const isFullscreen = !!(flexy && flexy.hasAttribute('fullscreen')) || !!document.fullscreenElement;
+        if (isFullscreen) return;
+        const secondary = document.querySelector('ytd-watch-flexy #secondary');
+        performVToggle(secondary);
+        return;
+      }
+
+      // 切换宽度/跳转Shorts逻辑 (原R键)
+      if (key === resizeKey) {
+        if (CONFIG.REDIRECT_SHORTS_WITH_R_KEY && window.location.pathname.startsWith('/shorts/')) {
+          const videoId = window.location.pathname.split('/shorts/')[1];
+          if (videoId) window.location.href = '/watch?v=' + videoId;
+          return; 
+        }
+
+        if (CONFIG.RESIZE_WITH_R_KEY && window.location.pathname.startsWith('/watch')) {
+          isPrimaryResized = !isPrimaryResized;
+          localStorage.setItem('yt_immersive_primary_resized', isPrimaryResized);
+          updatePrimaryWidth();
+          window.dispatchEvent(new Event('resize'));
+          setTimeout(() => window.dispatchEvent(new Event('resize')), 50);
+        }
+        return;
+      }
+    });
+
+    // 鼠标点击事件监听
     document.addEventListener('click', (e) => {
+      if (!window.location.pathname.startsWith('/watch')) return;
       if (!CONFIG.OPEN_RIGHT_ON_CHAPTER_BUTTON || !CONFIG.ENABLE_INLINE_RECS) return;
       const btn = e.target && e.target.closest?.('.ytp-chapter-title.ytp-button');
       if (!btn) return;
       const flexy = document.querySelector('ytd-watch-flexy');
       if (!canShowRightOnCurrentMode(flexy)) return;
-      secondary.classList.toggle('show');
+      const secondary = document.querySelector('ytd-watch-flexy #secondary');
+      if (secondary) secondary.classList.toggle('show');
     });
 
+    // 鼠标中键点击监听
     document.addEventListener('mousedown', (e) => {
+      if (!window.location.pathname.startsWith('/watch')) return;
       if (e.button !== 1) return;
       const flexy = document.querySelector('ytd-watch-flexy');
       const isFullscreen = !!(flexy && flexy.hasAttribute('fullscreen')) || !!document.fullscreenElement;
+      
       if (isFullscreen && CONFIG.MMB_ACTS_AS_V_IN_FULLSCREEN) {
         if (!isRecommendedTarget(e.target)) {
           e.preventDefault();
@@ -299,66 +397,22 @@
         }
         return;
       }
+      
       if (CONFIG.TOGGLE_WITH_MMB_ON_VIDEO) {
         const video = e.target.closest && e.target.closest('video.video-stream');
         if (!video) return;
         if (!canShowRightOnCurrentMode(flexy)) return;
-        secondary.classList.toggle('show');
+        const secondary = document.querySelector('ytd-watch-flexy #secondary');
+        if (secondary) secondary.classList.toggle('show');
         e.preventDefault();
       }
     });
+  }
 
-    // 键盘监听事件合并 (处理自定义快捷键逻辑)
-    document.addEventListener('keydown', (e) => {
-      const t = e.target;
-      // 避免在输入框中触发快捷键
-      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
-
-      // 【修复Bug】如果按下了修饰键 (Ctrl, Alt/Option, Meta/Cmd)，则直接退出，防止和系统/浏览器快捷键冲突
-      if (e.ctrlKey || e.altKey || e.metaKey) return;
-
-      if (!e.key) return;
-
-      const key = e.key.toLowerCase();
-      const toggleKey = (CONFIG.HOTKEY_TOGGLE_SECONDARY || 'v').toLowerCase();
-      const resizeKey = (CONFIG.HOTKEY_RESIZE_PLAYER || 'r').toLowerCase();
-
-      // 切换侧边栏逻辑 (原V键)
-      if (key === toggleKey && CONFIG.TOGGLE_WITH_V_KEY) {
-        const flexy = document.querySelector('ytd-watch-flexy');
-        const isFullscreen = !!(flexy && flexy.hasAttribute('fullscreen')) || !!document.fullscreenElement;
-        if (isFullscreen) return;
-        performVToggle(secondary);
-      }
-
-      // 切换宽度/跳转Shorts逻辑 (原R键)
-      if (key === resizeKey) {
-        // 先检查是否处于 Shorts 页面并需要跳转
-        if (CONFIG.REDIRECT_SHORTS_WITH_R_KEY && window.location.pathname.startsWith('/shorts/')) {
-          const videoId = window.location.pathname.split('/shorts/')[1];
-          if (videoId) {
-            window.location.href = '/watch?v=' + videoId;
-          }
-          return; // 结束逻辑，不再执行后续的调整比例
-        }
-
-        // 正常播放页面的调整比例逻辑
-        if (CONFIG.RESIZE_WITH_R_KEY) {
-          isPrimaryResized = !isPrimaryResized;
-
-          // 每次按下快捷键切换后，将当前状态保存到 localStorage 中
-          localStorage.setItem('yt_immersive_primary_resized', isPrimaryResized);
-
-          // 应用新宽度
-          updatePrimaryWidth();
-
-          // 强制派发全局 resize 事件，通知 YouTube 的 JS 重新计算视频流的高度与宽度
-          window.dispatchEvent(new Event('resize'));
-          // 双重保险：稍微延迟再次触发，确保 YouTube 的播放器容器响应完毕
-          setTimeout(() => window.dispatchEvent(new Event('resize')), 50);
-        }
-      }
-    });
+  // 单独处理 #secondary 的离开事件（因为是动态注入的DOM元素，保留在这个独立函数里）
+  function initToggle(secondary) {
+    if (!secondary || secondary.dataset.tmBound) return;
+    secondary.dataset.tmBound = '1';
 
     if (CONFIG.AUTO_HIDE_SECONDARY_ON_LEAVE) {
       secondary.addEventListener('mouseleave', (e) => {
@@ -370,16 +424,23 @@
 
   function init() {
     injectStyle();
-    setTopVar();
+    bindGlobalEvents();
+
     if (!CONFIG.ENABLE_INLINE_RECS) return true;
-    const flexy = document.querySelector('ytd-watch-flexy');
-    if (!flexy) return false;
-    const secondary = flexy.querySelector('#secondary');
-    const primary = flexy.querySelector('#primary');
-    if (!secondary || !primary) return false;
-    initToggle(secondary);
-    if (!flexy.classList.contains('ready')) {
-      requestAnimationFrame(() => flexy.classList.add('ready'));
+    
+    // 只在 watch 页面寻找侧边栏进行鼠标离开事件的绑定
+    if (window.location.pathname.startsWith('/watch')) {
+      const flexy = document.querySelector('ytd-watch-flexy');
+      if (!flexy) return false;
+      const secondary = flexy.querySelector('#secondary');
+      const primary = flexy.querySelector('#primary');
+      if (!secondary || !primary) return false;
+      
+      initToggle(secondary);
+      
+      if (!flexy.classList.contains('ready')) {
+        requestAnimationFrame(() => flexy.classList.add('ready'));
+      }
     }
     return true;
   }
