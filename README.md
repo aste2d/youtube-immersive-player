@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>YouTube Immersive Player</h1>
+  <h1>YouTube Immersive</h1>
 
   <p><strong><a href="README.md">English</a></strong> · <strong><a href="README.zh-CN.md">简体中文</a></strong> · <strong><a href="README.zh-TW.md">繁體中文</a></strong> · <strong><a href="README.ja.md">日本語</a></strong></p>
 
@@ -15,11 +15,11 @@
 
 ### Features
 
-- Main video **centered**, with fade-in  
-- Avoid layout jank and visual clutter  
-- Hide recommended videos in the **right drawer**  
-- **press V** to toggle the right drawer  
-- **middle-click** the video to toggle the drawer  
+- Remove a bunch of visual clutter 
+- **press R** | put shorts in the actual Player
+- **press P** | Easy PiP
+- **press V** | toggle the right feed
+- **middle-click** the video to toggle the feed
 - Easy to toggle features in the userscript
 
 
