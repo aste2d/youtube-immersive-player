@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name         YouTube Immersive
-// @namespace    https://github.com/aste2d/youtube-immersive-player
+// @namespace    https://github.com/aste2d/youtube-immersive
 // @description  Please check the GitHub link above. 请访问上方的GitHub链接查看说明。
 // @license      MIT © aste2d
 // @version      1.69
 // @author       aste
 // @match        https://www.youtube.com/*
 // @grant        none
-// @updateURL    https://raw.githubusercontent.com/aste2d/youtube-immersive-player/main/youtube-immersive-player.user.js
-// @downloadURL  https://raw.githubusercontent.com/aste2d/youtube-immersive-player/main/youtube-immersive-player.user.js
+// @updateURL    https://raw.githubusercontent.com/aste2d/youtube-immersive/main/youtube-immersive-player.user.js
+// @downloadURL  https://raw.githubusercontent.com/aste2d/youtube-immersive/main/youtube-immersive-player.user.js
 // ==/UserScript==
 
 (function () {
